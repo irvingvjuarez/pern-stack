@@ -9,10 +9,7 @@ tasksRouter.get("/:id", controller.getOneTask);
 
 tasksRouter.post("/", controller.setTask);
 
-tasksRouter.put("/:id", (req, res) => {
-  const { id } = req.params;
-  res.send(`Updating task: ${id}`);
-})
+tasksRouter.put("/:id", controller.updateTask);
 
 tasksRouter.delete("/:id", (req, res) => {
   const { id } = req.params;

@@ -2,6 +2,7 @@ const db = require("../db");
 const getAllTasks = require("../libs/getAllTasks");
 const getSingleTask = require("../libs/getSingleTask");
 const setTask = require("../libs/setTask");
+const updateTask = require("../libs/updateTask");
 
 class tasksController {
   constructor() {
@@ -27,7 +28,13 @@ class tasksController {
   }
 
   async setTask({body}, res) {
-    const response = await setTask(db, body);
+    const createdTask = await setTask(db, body);
+    res.json(createdTask);
+  }
+
+  async updateTask(req, res) {
+    const { params: {id}, body } = req;
+    const response = await updateTask(db, id, body);
     res.json(response);
   }
 }
