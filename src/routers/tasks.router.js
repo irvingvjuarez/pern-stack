@@ -4,22 +4,9 @@ const taskController = require("../controllers/tasks.controller");
 const tasksRouter = Router();
 const controller = new taskController();
 
-tasksRouter.get("/", async (req, res) => {
-  const tasks = await controller.getTasks();
-  res.send(tasks);
-})
+tasksRouter.get("/", controller.getTasks);
 
-tasksRouter.get("/:id", async (req, res) => {
-  const { id } = req.params;
-  const tasks = await controller.getTasks();
-  const task = tasks.find(task => task.task_id == id);
-
-  if (task) {
-    res.json(task);
-  } else {
-    res.sendStatus(404);
-  }
-})
+tasksRouter.get("/:id", controller.getOneTask);
 
 tasksRouter.post("/", async (req, res) => {
   const { body } = req;

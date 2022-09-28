@@ -1,14 +1,29 @@
 const db = require("../db");
+const getAllTasks = require("../libs/getAllTasks");
 
 class tasksController {
   constructor() {
     this.db = db;
   }
 
-  async getTasks() {
-    const res = await db.query("SELECT * FROM tasks");
-    const tasks = res.rows;
-    return tasks;
+  async getTasks(req, res) {
+    const tasks = await getAllTasks();
+
+    if(!req && !res) return tasks;
+    res.send(tasks);
+  }
+
+  async getOneTask(req, res) {
+    const { id } = req.params;
+    const data = await db.query("SELECT * FROM tasks");
+    const tasks = data.rows;
+    const task = tasks.find(task => task.task_id == id);
+
+    if (task) {
+      res.json(task);
+    } else {
+      res.sendStatus(404);
+    }
   }
 
   async setTask(query) {
