@@ -1,5 +1,6 @@
 const db = require("../db");
 const getAllTasks = require("../libs/getAllTasks");
+const getSingleTask = require("../libs/getSingleTask");
 
 class tasksController {
   constructor() {
@@ -7,7 +8,7 @@ class tasksController {
   }
 
   async getTasks(req, res) {
-    const tasks = await getAllTasks();
+    const tasks = await getAllTasks(db);
 
     if(!req && !res) return tasks;
     res.send(tasks);
@@ -15,9 +16,7 @@ class tasksController {
 
   async getOneTask(req, res) {
     const { id } = req.params;
-    const data = await db.query("SELECT * FROM tasks");
-    const tasks = data.rows;
-    const task = tasks.find(task => task.task_id == id);
+    const task = await getSingleTask(db, id);
 
     if (task) {
       res.json(task);
