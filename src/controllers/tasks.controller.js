@@ -1,6 +1,7 @@
 const db = require("../db");
 const getAllTasks = require("../libs/getAllTasks");
 const getSingleTask = require("../libs/getSingleTask");
+const setTask = require("../libs/setTask");
 
 class tasksController {
   constructor() {
@@ -25,9 +26,9 @@ class tasksController {
     }
   }
 
-  async setTask(query) {
-    const res = await db.query(query);
-    return res;
+  async setTask({body}, res) {
+    const response = await setTask(db, body);
+    res.json(response);
   }
 }
 

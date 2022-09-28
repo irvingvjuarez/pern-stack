@@ -5,19 +5,9 @@ const tasksRouter = Router();
 const controller = new taskController();
 
 tasksRouter.get("/", controller.getTasks);
-
 tasksRouter.get("/:id", controller.getOneTask);
 
-tasksRouter.post("/", async (req, res) => {
-  const { body } = req;
-  const { name, description } = body;
-
-  const query = `INSERT INTO tasks(task_name, task_description)
-    VALUES('${name}', '${description}')
-  `
-  const response = await controller.setTask(query);
-  res.json(response);
-})
+tasksRouter.post("/", controller.setTask);
 
 tasksRouter.put("/:id", (req, res) => {
   const { id } = req.params;
