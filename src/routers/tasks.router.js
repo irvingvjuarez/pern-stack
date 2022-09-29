@@ -11,10 +11,7 @@ tasksRouter.post("/", controller.setTask);
 
 tasksRouter.put("/:id", controller.updateTask);
 
-tasksRouter.delete("/:id", (req, res) => {
-  const { id } = req.params;
-  res.send(`Deleting task: ${id}`);
-})
+tasksRouter.delete("/:id", controller.deleteTask);
 
 module.exports = {
   tasksEndpoint: "/tasks",

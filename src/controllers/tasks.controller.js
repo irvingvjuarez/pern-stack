@@ -1,4 +1,5 @@
 const db = require("../db");
+const deleteTask = require("../libs/deleteTask");
 const getAllTasks = require("../libs/getAllTasks");
 const getSingleTask = require("../libs/getSingleTask");
 const setTask = require("../libs/setTask");
@@ -34,8 +35,14 @@ class tasksController {
 
   async updateTask(req, res) {
     const { params: {id}, body } = req;
-    const response = await updateTask(db, id, body);
-    res.json(response);
+    const result = await updateTask(db, id, body);
+    res.json(result);
+  }
+
+  async deleteTask(req, res) {
+    const { params: { id } } = req;
+    const result = await deleteTask(db, id);
+    res.json(result);
   }
 }
 
