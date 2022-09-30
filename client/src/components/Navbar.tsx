@@ -1,5 +1,4 @@
 import { Button, Box, AppBar, Container, Toolbar, Typography } from "@mui/material"
-import { Link } from "react-router-dom"
 import { useAppFlow } from "../hooks/useAppFlow"
 
 export const Navbar = () => {
@@ -9,9 +8,9 @@ export const Navbar = () => {
         <Container>
           <Toolbar>
             <Typography sx={{flexGrow: 1}}>
-              <Link to="/">
+              <Button onClick={() => useAppFlow("/")}>
                 PERN Stack
-              </Link>
+              </Button>
             </Typography>
 
             <Button
