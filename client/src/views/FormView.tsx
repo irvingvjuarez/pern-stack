@@ -9,11 +9,13 @@ export const FormView = () => {
   })
   const handleInfoInput = (evt: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>) => {
     const { name, value } = evt.target
-    const property = UserInfoInterface[name]
-    setUserInfo((prev) => ({
-      ...prev,
-      property: value
-    }))
+    setUserInfo((prev) => {
+      // @ts-ignore
+      prev[name] = value
+      return {
+        ...prev
+      }
+    })
   }
   const handleSubmitForm = (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     console.log({
