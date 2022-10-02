@@ -1,5 +1,5 @@
-import { Padding, Title } from "@mui/icons-material"
-import { Grid, Card, Typography, CardContent, TextField, Button } from "@mui/material"
+import { Grid, Card, Typography } from "@mui/material"
+import { FormView } from "../views/FormView"
 
 export const TaskForm = () => {
   return(
@@ -15,25 +15,7 @@ export const TaskForm = () => {
             Create Task
           </Typography>
 
-          <CardContent>
-            <form style={{display: "flex", flexDirection: "column"}}>
-              <TextField
-                variant="filled"
-                label="Title"
-                sx={{mb: 4}}
-              />
-
-              <TextField 
-                variant="filled"
-                label="Description"
-                sx={{mb: 4}}
-              />
-
-              <Button variant="contained">
-                Submit
-              </Button>
-            </form>
-          </CardContent>
+          <FormView />
         </Card>s
       </Grid>
     </Grid>

@@ -8,7 +8,7 @@ export const Navbar = () => {
         <Container>
           <Toolbar>
             <Typography sx={{flexGrow: 1}}>
-              <Button onClick={() => useAppFlow("/")}>
+              <Button onClick={useAppFlow("/")}>
                 PERN Stack
               </Button>
             </Typography>
