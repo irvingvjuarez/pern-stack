@@ -1,27 +1,8 @@
 import { CardContent, TextField, Button } from "@mui/material"
-import { UserInfoInterface } from "../types/interfaces/userInfo.interface"
-import { useState } from "react"
+import { useUserInfo } from "../hooks/useUserInfo"
 
 export const FormView = () => {
-  const [userInfo, setUserInfo] = useState<UserInfoInterface>({
-    title: "",
-    description: ""
-  })
-  const handleInfoInput = (evt: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>) => {
-    const { name, value } = evt.target
-    setUserInfo((prev) => {
-      // @ts-ignore
-      prev[name] = value
-      return {
-        ...prev
-      }
-    })
-  }
-  const handleSubmitForm = (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    console.log({
-      userInfo
-    })
-  }
+  const { handleInfoInput, handleSubmitForm } = useUserInfo();
 
   return(
     <CardContent>
