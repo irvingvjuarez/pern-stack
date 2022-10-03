@@ -21,9 +21,11 @@ export const FormView = () => {
           name="description"
           sx={{mb: 4}}
           onBlur={handleInfoInput}
+          multiline
+          rows={4}
         />
 
-        <Button variant="contained" onClick={handleSubmitForm}>
+        <Button variant="contained" type="submit" onClick={handleSubmitForm}>
           Submit
         </Button>
       </form>

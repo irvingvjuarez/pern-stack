@@ -11,15 +11,13 @@ export const useUserInfo = () => {
 
   const handleInfoInput = (evt: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>) => {
     const { name, value } = evt.target
-    setUserInfo((prev) => {
-      // @ts-ignore
-      prev[name] = value
-      return {
-      ...prev
-      }
-    })
+    setUserInfo((prev) => ({
+      ...prev,
+      [name]: value
+    }))
   }
   const handleSubmitForm = (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    evt.preventDefault();
     const { title } = userInfo;
 
     if (title) {
