@@ -5,6 +5,7 @@ import { Home } from "./pages/Home";
 import { AddTask } from "./pages/AddTask"
 
 import { Navbar } from "./components/Navbar"
+import { EditTask } from "./pages/EditTask";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/add-task" element={<AddTask />} />
+          <Route path="/update-task" element={<EditTask />} />
         </Routes>
       </Container>
     </BrowserRouter>
