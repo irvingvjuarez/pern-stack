@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
 export const useTasks = () => {
-	const [tasks, setTasks] = useState();
+	const [tasks, setTasks] = useState([]);
 
 	useEffect(() => {
 		const controller = new AbortController();
