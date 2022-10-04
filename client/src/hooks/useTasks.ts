@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 
-export const useTasks = <T>() => {
+export const useTasks = () => {
 	const [tasks, setTasks] = useState([]);
+	const [loading, setLoading] = useState(true)
 
 	useEffect(() => {
 		const controller = new AbortController();
@@ -10,10 +11,16 @@ export const useTasks = <T>() => {
 
 		fetch("http://localhost:3000/api/v1/tasks", queryConfig)
 			.then(res => res.json())
-			.then(data => setTasks(data))
+			.then(data => {
+				setLoading(false)
+				setTasks(data)
+			})
 
 		return () => controller.abort()
 	}, [])
 
-	return tasks as T
+	return {
+		tasks,
+		loading
+	}
 }
