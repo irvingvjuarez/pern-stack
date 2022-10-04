@@ -13,32 +13,31 @@ export const TableView: React.FC<TableViewProps> = ({
 	itemProps,
 	items
 }) => {
-
 	return (
 		<TableContainer>
-					<Table>
-						<TableHead>
-							<TableRow>
-								{headCells.map((cell) => (
-									<TableCell key={cell} align="center">{cell}</TableCell>
-								))}
-								<TableCell></TableCell>
-							</TableRow>
-						</TableHead>
+			<Table>
+				<TableHead>
+					<TableRow>
+						{headCells.map((cell) => (
+							<TableCell key={cell} align="center">{cell}</TableCell>
+						))}
+						<TableCell></TableCell>
+					</TableRow>
+				</TableHead>
 
-						<TableBody>
-							{items.map((item) => (
-								<TableRow key={item.task_id}>
-									{itemProps.map(prop => (
-										<TableCell align="center">{item[prop]}</TableCell>
-									))}
-									<TableCell>
-										<IconButtonView />
-									</TableCell>
-								</TableRow>
+				<TableBody>
+					{items.map((item) => (
+						<TableRow key={item.task_id}>
+							{itemProps.map(prop => (
+								<TableCell align="center" key={`${item.task_id}-${prop}`}>{item[prop]}</TableCell>
 							))}
-						</TableBody>
-					</Table>
-				</TableContainer>
+							<TableCell>
+								<IconButtonView id={item.task_id} />
+							</TableCell>
+						</TableRow>
+					))}
+				</TableBody>
+			</Table>
+		</TableContainer>
 	)
 }

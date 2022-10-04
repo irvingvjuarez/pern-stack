@@ -1,25 +1,20 @@
 import { IconButton, Menu, MenuItem } from "@mui/material"
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { useMemo, useState } from "react"
+import { useButtonIcon } from "../hooks/useButtonIcon";
+import { Link } from "react-router-dom"
 
-export const IconButtonView = () => {
-	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-	const open = Boolean(anchorEl);
+interface IconButtonViewProps {
+	id: number
+}
 
-	const config = useMemo(() => ({
-		options: [
+export const IconButtonView: React.FC<IconButtonViewProps> = ({ id }) => {
+	const { open, handleClick, anchorEl, handleClose, config } = useButtonIcon({
+		btnOptions: [
 			"Update",
 			"Delete"
-		],
-		itemHeight: 48
-	}), [])
-
-	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-	const handleClose = () => {
-    setAnchorEl(null);
-  };
+		]
+	})
+	const { options, itemHeight } = config
 
 	return (
 		<>
@@ -44,14 +39,16 @@ export const IconButtonView = () => {
 				onClose={handleClose}
 				PaperProps={{
 					style: {
-						maxHeight: config.itemHeight * 4.5,
+						maxHeight: itemHeight * 4.5,
 						width: '20ch',
 					},
 				}}
 			>
-				{config.options.map(option => (
+				{options.map(option => (
 					<MenuItem key={option} onClick={handleClose}>
-						{option}
+						<Link to={`/tasks/${option.toLowerCase()}/${id}`} style={{textDecoration: "none", color: "black"}}>
+							{option}
+						</Link>
 					</MenuItem>
 				))}
 			</Menu>
