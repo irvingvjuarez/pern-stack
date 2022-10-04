@@ -21,7 +21,18 @@ export const useUserInfo = () => {
     const { title } = userInfo;
 
     if (title) {
-      console.log("Ready to update database")
+      fetch("http://localhost:3000/api/v1/tasks", {
+				method: "POST",
+				body: JSON.stringify(userInfo),
+				headers: {
+					"Accept": "application/json",
+					"Content-Type": "application/json"
+				}
+			})
+				.then(res => res.json())
+				.then(task => console.log({
+					task
+				}))
     } else {
       console.log("Unable to update database")
     }
