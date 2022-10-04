@@ -15,7 +15,7 @@ export const Navbar = () => {
 
             <Button
               variant="contained"
-              onClick={useAppFlow("/add-task")}
+              onClick={useAppFlow("/tasks/add")}
             >
               New Task
             </Button>

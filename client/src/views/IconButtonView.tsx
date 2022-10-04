@@ -8,12 +8,10 @@ interface IconButtonViewProps {
 }
 
 export const IconButtonView: React.FC<IconButtonViewProps> = ({ id }) => {
-	const { open, handleClick, anchorEl, handleClose, config } = useButtonIcon({
-		btnOptions: [
-			"Update",
-			"Delete"
-		]
-	})
+	const useBtnIconConfig = {
+		btnOptions: [ "Update", "Delete" ]
+	}
+	const { open, handleClick, anchorEl, handleClose, config } = useButtonIcon(useBtnIconConfig)
 	const { options, itemHeight } = config
 
 	return (
@@ -46,7 +44,10 @@ export const IconButtonView: React.FC<IconButtonViewProps> = ({ id }) => {
 			>
 				{options.map(option => (
 					<MenuItem key={option} onClick={handleClose}>
-						<Link to={`/tasks/${option.toLowerCase()}/${id}`} style={{textDecoration: "none", color: "black"}}>
+						<Link
+							to={`/tasks/${option.toLowerCase()}/${id}`}
+							style={{textDecoration: "none", color: "black"}}
+						>
 							{option}
 						</Link>
 					</MenuItem>
