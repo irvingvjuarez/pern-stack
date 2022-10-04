@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-export const useTasks = () => {
+export const useTasks = <T>() => {
 	const [tasks, setTasks] = useState([]);
 
 	useEffect(() => {
@@ -15,5 +15,5 @@ export const useTasks = () => {
 		return () => controller.abort()
 	}, [])
 
-	return tasks
+	return tasks as T
 }

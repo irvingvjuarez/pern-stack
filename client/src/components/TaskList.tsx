@@ -1,9 +1,10 @@
-import { Container } from "@mui/material"
+import { Container, TableContainer, Table, TableHead, TableRow, TableCell, TableBody } from "@mui/material"
 import { useTasks } from "../hooks/useTasks"
 import { Typography } from "@mui/material"
+import { TaskInterface } from "../types/interfaces/task.interface";
 
 export const TaskList = () => {
-  const tasks = useTasks();
+  const tasks = useTasks<TaskInterface[]>();
 
   return(
     <Container sx={{mt: 2}}>
@@ -12,10 +13,25 @@ export const TaskList = () => {
 					No tasks created
 				</Typography>
 			) : (
-				<div>
-					I am the tasks list
-					{/* TODO: Create items for the tasks */}
-				</div>
+				<TableContainer>
+					<Table>
+						<TableHead>
+							<TableRow>
+								<TableCell align="center">Title</TableCell>
+								<TableCell align="center">Description</TableCell>
+							</TableRow>
+						</TableHead>
+
+						<TableBody>
+							{tasks.map(task => (
+								<TableRow>
+									<TableCell align="center">{task.task_name}</TableCell>
+									<TableCell align="center">{task.task_description}</TableCell>
+								</TableRow>
+							))}
+						</TableBody>
+					</Table>
+				</TableContainer>
 			)}
     </Container>
   )
