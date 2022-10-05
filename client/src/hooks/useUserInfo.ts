@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom";
 import { requestHttp } from "../services/requestHttp.service";
 import { UserInfoInterface } from "../types/interfaces/userInfo.interface"
 
@@ -10,7 +11,7 @@ const initialValue = {
 export const useUserInfo = () => {
   const [userInfo, setUserInfo] = useState<UserInfoInterface>(initialValue);
 	const [isTitle, setIsTitle] = useState(true)
-	const [requestMsg, setRequestMsg] = useState("")
+	const navigate = useNavigate()
 
   const handleInfoInput = (evt: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>) => {
     const { name, value } = evt.target
@@ -24,12 +25,12 @@ export const useUserInfo = () => {
     const { title } = userInfo;
 
     if (title) {
-			const {message} = await requestHttp({
+			await requestHttp({
 				method: "POST",
 				data: userInfo
 			})
 
-			setRequestMsg(message)
+			navigate("/")
     } else {
       setIsTitle(false)
     }
@@ -38,7 +39,6 @@ export const useUserInfo = () => {
   return {
     handleInfoInput,
     handleSubmitForm,
-		isTitle,
-		requestMsg
+		isTitle
   }
 }

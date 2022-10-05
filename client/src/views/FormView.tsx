@@ -9,7 +9,7 @@ interface FormViewProps {
 }
 
 export const FormView: React.FC<FormViewProps> = ({ info }) => {
-  const { handleInfoInput, handleSubmitForm, isTitle, requestMsg } = useUserInfo();
+  const { handleInfoInput, handleSubmitForm, isTitle } = useUserInfo();
 	const task = info.data as TaskInterface
 
   return(
