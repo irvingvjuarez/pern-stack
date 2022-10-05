@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react"
 import { numberRegexp } from "../globals/regexp";
 import { getPlainApi } from "../services/getPlainApi.service";
+import { TaskInterface } from "../types/interfaces/task.interface";
 import { UseTaskResponse } from "../types/interfaces/useTasksResponse.interface";
 
 export const useTasks = (pathDetail?: string): UseTaskResponse => {
-	const [tasks, setTasks] = useState([]);
+	const [data, setData] = useState<TaskInterface[]>([]);
 	const [loading, setLoading] = useState(true)
 	const idTask = pathDetail ? pathDetail.match(numberRegexp)?.[0] : "";
 	const api = getPlainApi(idTask)
@@ -16,16 +17,16 @@ export const useTasks = (pathDetail?: string): UseTaskResponse => {
 
 		fetch(api, queryConfig)
 			.then(res => res.json())
-			.then(data => {
+			.then(info => {
 				setLoading(false)
-				setTasks(data)
+				setData(info)
 			})
 
 		return () => controller.abort()
 	}, [])
 
 	return {
-		tasks,
+		data,
 		loading
 	}
 }

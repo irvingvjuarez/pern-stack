@@ -1,17 +1,12 @@
 import { useState, useEffect } from "react"
 import { getPlainApi } from "../services/getPlainApi.service";
-import { TaskInterface } from "../types/interfaces/task.interface";
+import { TaskInterface, TaskInterfaceInitValue } from "../types/interfaces/task.interface";
+import { UseTaskResponse, UseTaskResponseInitValue } from "../types/interfaces/useTasksResponse.interface";
 
-export const useSingleTask = (id?: string) => {
-	if (!id) return {
-		loading: false,
-		tasks: {
-			task_name: "",
-			task_description: ""
-		}
-	}
+export const useSingleTask = (id?: string): UseTaskResponse => {
+	if (!id) return UseTaskResponseInitValue
 
-	const [data, setData] = useState<TaskInterface | null>(null);
+	const [data, setData] = useState<TaskInterface>(TaskInterfaceInitValue);
 	const [loading, setLoading] = useState(true)
 	const api = getPlainApi(id)
 

@@ -4,12 +4,12 @@ import { TaskInterface } from "../types/interfaces/task.interface";
 import { UseTaskResponse } from "../types/interfaces/useTasksResponse.interface";
 
 interface FormViewProps {
-	data: UseTaskResponse
+	info: UseTaskResponse
 }
 
-export const FormView: React.FC<FormViewProps> = ({ data }) => {
+export const FormView: React.FC<FormViewProps> = ({ info }) => {
   const { handleInfoInput, handleSubmitForm } = useUserInfo();
-	const task = data.tasks as TaskInterface
+	const {data: task} = info
 
   return(
     <CardContent>

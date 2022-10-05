@@ -3,6 +3,8 @@ import { useLocation } from "react-router-dom"
 import { useTasks } from "../hooks/useTasks"
 import { FormView } from "../views/FormView"
 import { ConditionalLoader } from "../components/ConditionalLoader"
+import { getIdFromPath } from "../services/getIdFromPath.service"
+import { useSingleTask } from "../hooks/useSingleTask"
 
 interface TaskFormProps {
   mode?: "create" | "edit"
@@ -10,10 +12,8 @@ interface TaskFormProps {
 
 export const TaskForm: React.FC<TaskFormProps> = ({ mode = "create" }) => {
 	const {pathname} = useLocation()
-	const task = mode === "edit" ? useTasks(pathname) : { loading: false, tasks: {
-		task_name: "",
-		task_description: ""
-	} }
+	const id = mode === "edit" ? getIdFromPath(pathname) : undefined;
+	const task = useSingleTask(id);
 
   return(
     <Grid
@@ -29,9 +29,9 @@ export const TaskForm: React.FC<TaskFormProps> = ({ mode = "create" }) => {
           </Typography>
 
 					<ConditionalLoader loading={task.loading}>
-          	<FormView data={task} />
+          	<FormView info={task} />
 					</ConditionalLoader>
-        </Card>s
+        </Card>
       </Grid>
     </Grid>
   )
