@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { UserInfoInterface } from "../types/interfaces/userInfo.interface"
+import { getCrudResponse, useCrud } from "./useCrud";
 
 const initialValue = {
   title: "",
@@ -21,18 +22,25 @@ export const useUserInfo = () => {
     const { title } = userInfo;
 
     if (title) {
-      fetch("http://localhost:3000/api/v1/tasks", {
+			const res = await getCrudResponse({
 				method: "POST",
-				body: JSON.stringify(userInfo),
-				headers: {
-					"Accept": "application/json",
-					"Content-Type": "application/json"
-				}
+				data: userInfo
 			})
-				.then(res => res.json())
-				.then(task => console.log({
-					task
-				}))
+
+			console.log(res)
+
+      // fetch("http://localhost:3000/api/v1/tasks", {
+			// 	method: "POST",
+			// 	body: JSON.stringify(userInfo),
+			// 	headers: {
+			// 		"Accept": "application/json",
+			// 		"Content-Type": "application/json"
+			// 	}
+			// })
+			// 	.then(res => res.json())
+			// 	.then(task => console.log({
+			// 		task
+			// 	}))
     } else {
       console.log("Unable to update database")
     }

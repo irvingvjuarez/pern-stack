@@ -1,21 +1,19 @@
 import { tasksApiRoot } from "../globals/apis"
-import { TaskInterface } from "../types/interfaces/task.interface";
 import { useState } from "react"
 import { RequestMessageInterface, RequestMessageInterfaceInitValue } from "../types/interfaces/requestMsg.interface";
 
 interface useCrudProps {
 	method: "POST" | "DELETE" | "PUT";
-	data?: TaskInterface
+	data?: any
 }
 
-const getCrudResponse = async (
-	method: useCrudProps["method"],
-	setMsg: React.Dispatch<React.SetStateAction<RequestMessageInterface>>,
-	data: useCrudProps["data"]
-) => {
+export const getCrudResponse = async ({
+	method,
+	data
+}: useCrudProps) => {
 	try {
 		const request = await fetch(tasksApiRoot, {
-			method: method,
+			method,
 			body: JSON.stringify(data),
 			headers: {
 				"Accept": "application/json",
@@ -23,23 +21,24 @@ const getCrudResponse = async (
 			}
 		})
 		const response = await request.json()
-		setMsg(prev => ({
-			...prev,
+		return {
+			...RequestMessageInterfaceInitValue,
 			message: "success",
 			data: response
-		}))
+		}
 	} catch (error) {
-		setMsg(prev => ({
-			...prev,
+		return {
+			...RequestMessageInterfaceInitValue,
 			error
-		}))
+		}
 	}
 }
 
 export const useCrud = async ({method, data}: useCrudProps) => {
 	const [crudResponse, setCrudResponse] = useState<RequestMessageInterface>(RequestMessageInterfaceInitValue)
 
-	await getCrudResponse(method, setCrudResponse, data)
+	// const response = await getCrudResponse({method, data})
+	// setCrudResponse(response)
 
 	return crudResponse
 }
