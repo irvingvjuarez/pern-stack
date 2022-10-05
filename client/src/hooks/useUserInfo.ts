@@ -1,6 +1,6 @@
 import { useState } from "react"
+import { requestHttp } from "../services/requestHttp.service";
 import { UserInfoInterface } from "../types/interfaces/userInfo.interface"
-import { getCrudResponse, useCrud } from "./useCrud";
 
 const initialValue = {
   title: "",
@@ -9,6 +9,8 @@ const initialValue = {
 
 export const useUserInfo = () => {
   const [userInfo, setUserInfo] = useState<UserInfoInterface>(initialValue);
+	const [isTitle, setIsTitle] = useState(true)
+	const [requestMsg, setRequestMsg] = useState("")
 
   const handleInfoInput = (evt: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>) => {
     const { name, value } = evt.target
@@ -22,32 +24,21 @@ export const useUserInfo = () => {
     const { title } = userInfo;
 
     if (title) {
-			const res = await getCrudResponse({
+			const {message} = await requestHttp({
 				method: "POST",
 				data: userInfo
 			})
 
-			console.log(res)
-
-      // fetch("http://localhost:3000/api/v1/tasks", {
-			// 	method: "POST",
-			// 	body: JSON.stringify(userInfo),
-			// 	headers: {
-			// 		"Accept": "application/json",
-			// 		"Content-Type": "application/json"
-			// 	}
-			// })
-			// 	.then(res => res.json())
-			// 	.then(task => console.log({
-			// 		task
-			// 	}))
+			setRequestMsg(message)
     } else {
-      console.log("Unable to update database")
+      setIsTitle(false)
     }
   }
 
   return {
     handleInfoInput,
-    handleSubmitForm
+    handleSubmitForm,
+		isTitle,
+		requestMsg
   }
 }
