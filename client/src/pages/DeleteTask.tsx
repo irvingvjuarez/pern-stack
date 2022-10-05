@@ -1,4 +1,5 @@
 import { Container, AlertTitle, Alert, Box, Button } from "@mui/material"
+import { useAppFlow } from "../hooks/useAppFlow"
 
 export const DeleteTask = () => {
 	return(
@@ -9,7 +10,7 @@ export const DeleteTask = () => {
 			</Alert>
 
 			<Box sx={{mt: 5}}>
-				<Button variant="outlined" sx={{mr: 2}}>Cancel</Button>
+				<Button variant="outlined" sx={{mr: 2}} onClick={useAppFlow()}>Cancel</Button>
 				<Button variant="contained" color="error">Delete</Button>
 			</Box>
 		</Container>
