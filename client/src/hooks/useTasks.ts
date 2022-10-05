@@ -1,15 +1,20 @@
 import { useEffect, useState } from "react"
+import { numberRegexp } from "../globals/regexp";
+import { getPlainApi } from "../services/getPlainApi.service";
+import { UseTaskResponse } from "../types/interfaces/useTasksResponse.interface";
 
-export const useTasks = () => {
+export const useTasks = (pathDetail?: string): UseTaskResponse => {
 	const [tasks, setTasks] = useState([]);
 	const [loading, setLoading] = useState(true)
+	const idTask = pathDetail ? pathDetail.match(numberRegexp)?.[0] : "";
+	const api = getPlainApi(idTask)
 
 	useEffect(() => {
 		const controller = new AbortController();
 		const { signal } = controller
 		const queryConfig = { signal }
 
-		fetch("http://localhost:3000/api/v1/tasks", queryConfig)
+		fetch(api, queryConfig)
 			.then(res => res.json())
 			.then(data => {
 				setLoading(false)

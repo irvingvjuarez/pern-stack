@@ -1,14 +1,19 @@
 import { Grid, Card, Typography } from "@mui/material"
+import { useLocation } from "react-router-dom"
+import { useTasks } from "../hooks/useTasks"
 import { FormView } from "../views/FormView"
+import { ConditionalLoader } from "../components/ConditionalLoader"
 
 interface TaskFormProps {
   mode?: "create" | "edit"
 }
 
 export const TaskForm: React.FC<TaskFormProps> = ({ mode = "create" }) => {
-  if (mode === "edit") {
-    // TODO: fetch data 
-  }
+	const {pathname} = useLocation()
+	const task = mode === "edit" ? useTasks(pathname) : { loading: false, tasks: {
+		task_name: "",
+		task_description: ""
+	} }
 
   return(
     <Grid
@@ -23,7 +28,9 @@ export const TaskForm: React.FC<TaskFormProps> = ({ mode = "create" }) => {
             {mode === "create" ? "Create Task" : "Update Task"}
           </Typography>
 
-          <FormView />
+					<ConditionalLoader loading={task.loading}>
+          	<FormView data={task} />
+					</ConditionalLoader>
         </Card>s
       </Grid>
     </Grid>
