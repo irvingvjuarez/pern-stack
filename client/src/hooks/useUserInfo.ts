@@ -16,7 +16,7 @@ export const useUserInfo = () => {
       [name]: value
     }))
   }
-  const handleSubmitForm = (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleSubmitForm = async (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     evt.preventDefault();
     const { title } = userInfo;
 
