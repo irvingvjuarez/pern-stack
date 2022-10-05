@@ -21,7 +21,7 @@ export const requestHttp = async ({ method, data }: requestHttpProps) => {
 		const response = await request.json()
 		return {
 			...res,
-			message: "success",
+			message: "Task successfully created",
 			data: response
 		}
 	} catch (error) {
