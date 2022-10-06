@@ -5,7 +5,7 @@ import { getPlainApi } from "./getPlainApi.service";
 interface requestHttpProps {
 	method: MethodType;
 	data?: any;
-	id: number
+	id: number | string
 }
 
 export const requestHttp = async ({ method, data, id }: requestHttpProps) => {
@@ -15,7 +15,7 @@ export const requestHttp = async ({ method, data, id }: requestHttpProps) => {
 	try {
 		const request = await fetch(api, {
 			method,
-			body: JSON.stringify(data),
+			body: JSON.stringify(data || {}),
 			headers: {
 				"Accept": "application/json",
 				"Content-Type": "application/json"
