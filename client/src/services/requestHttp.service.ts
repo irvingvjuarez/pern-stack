@@ -1,16 +1,19 @@
-import { tasksApiRoot } from "../globals/apis";
+import { MethodType } from "../types/customTypes/methods.type";
 import { RequestMessageInterfaceInitValue } from "../types/interfaces/requestMsg.interface";
+import { getPlainApi } from "./getPlainApi.service";
 
 interface requestHttpProps {
-	method: "POST" | "DELETE" | "PUT";
-	data?: any
+	method: MethodType;
+	data?: any;
+	id: number
 }
 
-export const requestHttp = async ({ method, data }: requestHttpProps) => {
+export const requestHttp = async ({ method, data, id }: requestHttpProps) => {
 	const res = RequestMessageInterfaceInitValue
+	const api = getPlainApi(id.toString())
 
 	try {
-		const request = await fetch(tasksApiRoot, {
+		const request = await fetch(api, {
 			method,
 			body: JSON.stringify(data),
 			headers: {

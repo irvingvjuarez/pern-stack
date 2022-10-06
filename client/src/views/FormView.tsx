@@ -9,8 +9,9 @@ interface FormViewProps {
 }
 
 export const FormView: React.FC<FormViewProps> = ({ info }) => {
-  const { handleInfoInput, handleSubmitForm, isTitle } = useUserInfo();
+  const { handleInfoInput, handleSubmitForm, isTitle, method } = useUserInfo(info);
 	const task = info.data as TaskInterface
+	const { task_id } = task
 
   return(
     <CardContent>
@@ -39,7 +40,7 @@ export const FormView: React.FC<FormViewProps> = ({ info }) => {
 					<Alert severity="error" sx={{mb: 2}} variant="outlined">The title is compulsory</Alert>
 				</ConditionalNode>
 
-        <Button variant="contained" type="submit" onClick={handleSubmitForm}>
+        <Button variant="contained" type="submit" onClick={(e) => handleSubmitForm(e, method, task_id)}>
           Submit
         </Button>
       </form>

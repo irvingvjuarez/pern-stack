@@ -1,16 +1,20 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom";
 import { requestHttp } from "../services/requestHttp.service";
+import { MethodType } from "../types/customTypes/methods.type";
+import { TaskInterface } from "../types/interfaces/task.interface";
 import { UserInfoInterface } from "../types/interfaces/userInfo.interface"
+import { UseTaskResponse } from "../types/interfaces/useTasksResponse.interface";
 
 const initialValue = {
   title: "",
   description: ""
 }
 
-export const useUserInfo = () => {
+export const useUserInfo = (info: UseTaskResponse) => {
   const [userInfo, setUserInfo] = useState<UserInfoInterface>(initialValue);
 	const [isTitle, setIsTitle] = useState(true)
+	const method: MethodType = (info.data as TaskInterface).task_name !== "" ? "PUT" : "POST";
 	const navigate = useNavigate()
 
   const handleInfoInput = (evt: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>) => {
@@ -20,14 +24,15 @@ export const useUserInfo = () => {
       [name]: value
     }))
   }
-  const handleSubmitForm = async (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleSubmitForm = async (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>, method: MethodType, id: number) => {
     evt.preventDefault();
     const { title } = userInfo;
 
     if (title) {
 			await requestHttp({
-				method: "POST",
-				data: userInfo
+				method,
+				data: userInfo,
+				id
 			})
 
 			navigate("/")
@@ -39,6 +44,7 @@ export const useUserInfo = () => {
   return {
     handleInfoInput,
     handleSubmitForm,
-		isTitle
+		isTitle,
+		method
   }
 }
