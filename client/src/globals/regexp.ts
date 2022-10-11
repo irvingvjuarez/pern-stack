@@ -1,1 +1,1 @@
-export const numberRegexp = new RegExp(/\d/gm)
+export const numberRegexp = new RegExp(/\d+/gm)
