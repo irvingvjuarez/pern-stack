@@ -1,6 +1,9 @@
 import { useState } from "react"
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { requestHttp } from "../services/requestHttp.service";
+import { actions } from "../store";
+import { EActionTypes } from "../store/actions.enum";
 import { MethodType } from "../types/customTypes/methods.type";
 import { TaskInterface } from "../types/interfaces/task.interface";
 import { UserInfoInterface } from "../types/interfaces/userInfo.interface"
@@ -16,6 +19,7 @@ export const useUserInfo = (info: UseTaskResponse) => {
 	const [isTitle, setIsTitle] = useState(true)
 	const method: MethodType = (info.data as TaskInterface).task_name !== "" ? "PUT" : "POST";
 	const navigate = useNavigate()
+	const dispatch = useDispatch()
 
   const handleInfoInput = (evt: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement, Element>) => {
     const { name, value } = evt.target
@@ -36,6 +40,14 @@ export const useUserInfo = (info: UseTaskResponse) => {
 			})
 
 			navigate("/")
+			dispatch(actions[EActionTypes.setMsg]({
+				message: "Task event done correctly",
+				status: "success"
+			}))
+
+			setTimeout(() => {
+				dispatch(actions[EActionTypes.removeMsg]())
+			}, 3000)
     } else {
       setIsTitle(false)
     }

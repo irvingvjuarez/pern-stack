@@ -12,7 +12,7 @@ interface requestHttpProps {
 
 export const requestHttp = async ({ method, data, id, navigate }: requestHttpProps) => {
 	const res = RequestMessageInterfaceInitValue
-	const api = getPlainApi(id.toString())
+	const api = getPlainApi(id?.toString())
 
 	try {
 		const request = await fetch(api, {
