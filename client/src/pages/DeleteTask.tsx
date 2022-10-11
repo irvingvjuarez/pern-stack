@@ -1,20 +1,13 @@
 import { Container, AlertTitle, Alert, Box, Button } from "@mui/material"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 import { useAppFlow } from "../hooks/useAppFlow"
-import { useSnackbar } from "../hooks/useSnackbar";
+import { useHttp } from "../hooks/useHttp";
 import { getIdFromPath } from "../services/getIdFromPath.service";
-import { requestHttp } from "../services/requestHttp.service"
 
 export const DeleteTask = () => {
 	const { pathname } = useLocation();
 	let id = getIdFromPath(pathname) as string
-	const navigate = useNavigate()
-	const showSnackbar = useSnackbar()
-
-	const handleDelete = () => {
-		requestHttp({ method: "DELETE", id, navigate })
-		showSnackbar()
-	}
+	const { handleDelete } = useHttp()
 
 	return(
 		<Container sx={{mt: 2}}>
@@ -25,7 +18,7 @@ export const DeleteTask = () => {
 
 			<Box sx={{mt: 5}}>
 				<Button variant="outlined" sx={{mr: 2}} onClick={useAppFlow()}>Cancel</Button>
-				<Button variant="contained" color="error" onClick={handleDelete} >
+				<Button variant="contained" color="error" onClick={() => handleDelete(id)} >
 					Delete
 				</Button>
 			</Box>
